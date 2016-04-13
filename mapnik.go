@@ -80,7 +80,11 @@ type MapnikVectorData struct {
 }
 
 func NewVectorData(data []byte, x, y, z uint64) *MapnikVectorData {
-	mvd := &MapnikVectorData{data: C.CString(string(data))}
+	if len(data) == 0 {
+		return nil
+	}
+
+	mvd := &MapnikVectorData{data: (*C.char)(unsafe.Pointer(&data[0]))}
 	mvd.mvd = C.mapnik_vector_data(mvd.data, C.int(len(data)), C.int(x), C.int(y), C.int(z))
 
 	return mvd

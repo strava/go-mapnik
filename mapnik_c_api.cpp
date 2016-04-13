@@ -16,10 +16,8 @@
 
 #include "vector_tile.pb.cc"
 #include "vector_tile_compression.hpp"
-#include "vector_tile_datasource.hpp"
 #include "vector_tile_datasource_pbf.hpp"
 #include "vector_tile_compression.hpp"
-#include "vector_tile_backend_pbf.hpp"
 #include <protozero/pbf_reader.hpp>
 
 
@@ -118,7 +116,7 @@ void mapnik_logging_set_severity(int level) {
 
 
 struct _mapnik_vector_data_t {
-    std::string * data_string;
+    const char * data_string;
     int len;
     size_t x;
     size_t y;
@@ -145,7 +143,7 @@ void mapnik_map_free(mapnik_map_t * m) {
             delete m->m;
         }
         if (m->vector_data) {
-             mapnik_vector_data_free(m->vector_data);
+             delete m->vector_data;
         }
         if (m->err) {
             delete m->err;
@@ -314,9 +312,7 @@ void process_vector_data(mapnik::agg_renderer<mapnik_rgba_image> & ren, mapnik_m
     using layer_list_type = std::vector<protozero::pbf_reader>;
     std::map<std::string,layer_list_type> pbf_layers;
 
-    std::string dsp(*(data->data_string));
-
-    protozero::pbf_reader item(dsp.c_str(),vd.len);
+    protozero::pbf_reader item(data->data_string,vd.len);
     while (item.next(3)) {
         protozero::pbf_reader layer_msg = item.get_message();
         protozero::pbf_reader layer_og(layer_msg);
@@ -568,7 +564,7 @@ void mapnik_map_reset_maximum_extent(mapnik_map_t * m) {
 
 mapnik_vector_data_t * mapnik_vector_data(const char * data, int len, int x, int y, int z) {
     mapnik_vector_data_t * vd = new mapnik_vector_data_t;
-    vd->data_string = new std::string(data, len);
+    vd->data_string = data;
     vd->len = len;
     vd->x = x;
     vd->y = y;
@@ -579,20 +575,10 @@ mapnik_vector_data_t * mapnik_vector_data(const char * data, int len, int x, int
 
 void mapnik_map_set_vector_data(mapnik_map_t * m, mapnik_vector_data_t * vd) {
     if (m->vector_data){
-        mapnik_vector_data_free(m->vector_data);
+        delete m->vector_data;
     }
 
     m->vector_data = vd;
-}
-
-void mapnik_vector_data_free(mapnik_vector_data_t * vd) {
-    if (vd){
-        if(vd->data_string != NULL){
-            delete vd->data_string;
-        }
-
-        delete vd;
-    }
 }
 
 #ifdef __cplusplus

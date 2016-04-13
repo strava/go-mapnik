@@ -18,8 +18,5 @@ git submodule init
 #source ./bootstrap.sh 
 export CXX=g++
 export CC=gcc
-echo `mapnik-config --cflags`
-echo `mapnik-config --cxxflags`
-echo `mapnik-config --ldflags`
 make && cd ../../
 
