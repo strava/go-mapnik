@@ -3,9 +3,10 @@ package mapnik
 
 //go:generate bash ./configure.bash
 
-// #include "mapnik_c_api.h"
+/*
+#include "mapnik_c_api.h"
+*/
 import "C"
-
 import (
 	"errors"
 	"fmt"
@@ -17,10 +18,10 @@ import (
 type LogLevel int
 
 var (
-	None  = LogLevel(C.MAPNIK_NONE)
-	Debug = LogLevel(C.MAPNIK_DEBUG)
-	Warn  = LogLevel(C.MAPNIK_WARN)
-	Error = LogLevel(C.MAPNIK_ERROR)
+	None  = LogLevel(C.MAPNIKLOG_NONE)
+	Debug = LogLevel(C.MAPNIKLOG_DEBUG)
+	Warn  = LogLevel(C.MAPNIKLOG_WARN)
+	Error = LogLevel(C.MAPNIKLOG_ERROR)
 )
 
 func init() {
@@ -59,11 +60,6 @@ type version struct {
 var Version version
 
 func init() {
-	Version.Numeric = int(C.mapnik_version)
-	Version.Major = int(C.mapnik_version_major)
-	Version.Minor = int(C.mapnik_version_minor)
-	Version.Patch = int(C.mapnik_version_patch)
-	Version.String = C.GoString(C.mapnik_version_string)
 }
 
 // Map base type

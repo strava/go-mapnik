@@ -12,12 +12,12 @@ fi
 echo "Building mapnik-vector-tile"
 
 cd mapnik-vector-tile 
-git checkout tags/v0.11.0
+git checkout tags/v1.1.0
 git submodule init 
 
 #source ./bootstrap.sh 
-export CXX=g++
-export CC=gcc
+export CXX=clang++
+export CC=clang
 echo `mapnik-config --cflags`
 echo `mapnik-config --cxxflags`
 echo `mapnik-config --ldflags`

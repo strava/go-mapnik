@@ -1,6 +1,7 @@
 
 // Formatted with: astyle  --style=google --pad-oper --add-brackets
 
+#include "mapnik_c_api.h"
 #include <mapnik/debug.hpp>
 #include <mapnik/version.hpp>
 #include <mapnik/map.hpp>
@@ -16,10 +17,8 @@
 
 #include "vector_tile.pb.cc"
 #include "vector_tile_compression.hpp"
-#include "vector_tile_datasource.hpp"
 #include "vector_tile_datasource_pbf.hpp"
 #include "vector_tile_compression.hpp"
-#include "vector_tile_backend_pbf.hpp"
 #include <protozero/pbf_reader.hpp>
 
 
@@ -31,18 +30,12 @@
 #include <mapnik/graphics.hpp>
 #endif
 
-#include "mapnik_c_api.h"
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
 
-const int mapnik_version = MAPNIK_VERSION;
-const char *mapnik_version_string = MAPNIK_VERSION_STRING;
-const int mapnik_version_major = MAPNIK_MAJOR_VERSION;
-const int mapnik_version_minor = MAPNIK_MINOR_VERSION;
-const int mapnik_version_patch = MAPNIK_PATCH_VERSION;
 const int MAPNIK_NONE = 0;
 const int MAPNIK_DEBUG = 1;
 const int MAPNIK_WARN = 2;

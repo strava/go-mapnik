@@ -15,19 +15,13 @@ extern "C"
 #include "stdint.h"
 #include "stdlib.h"
 
-extern const int mapnik_version;
-extern const char *mapnik_version_string;
-extern const int mapnik_version_major;
-extern const int mapnik_version_minor;
-extern const int mapnik_version_patch;
-
 MAPNIKCAPICALL int mapnik_register_datasources(const char* path);
 MAPNIKCAPICALL int mapnik_register_fonts(const char* path);
 
-extern const int MAPNIK_NONE;
-extern const int MAPNIK_DEBUG;
-extern const int MAPNIK_WARN;
-extern const int MAPNIK_ERROR;
+const int MAPNIKLOG_NONE = 0;
+const int MAPNIKLOG_DEBUG = 1;
+const int MAPNIKLOG_WARN = 2;
+const int MAPNIKLOG_ERROR = 3;
 
 MAPNIKCAPICALL void mapnik_logging_set_severity(int);
 
