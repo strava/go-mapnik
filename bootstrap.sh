@@ -12,7 +12,7 @@ fi
 echo "Building mapnik-vector-tile"
 
 cd mapnik-vector-tile 
-git checkout tags/v1.1.0
+git checkout tags/v1.5.0
 git submodule init 
 
 #source ./bootstrap.sh 
